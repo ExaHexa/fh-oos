@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"com.github.exahexa.pascalsche","l":"PascalsTriangle"}]
