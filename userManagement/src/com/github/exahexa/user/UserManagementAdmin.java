@@ -7,6 +7,6 @@ package com.github.exahexa.user;
  * @author exahexa
  *
  */
-public class UserAdmin {
+public class UserManagementAdmin {
 
 }
