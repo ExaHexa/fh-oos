@@ -9,5 +9,5 @@ package com.github.exahexa.user;
  */
 public interface UserManagement {
     void insertUser(User user);
-    boolean userOk(User user);
+    boolean userExist(User user);
 }
