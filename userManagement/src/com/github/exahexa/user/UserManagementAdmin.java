@@ -25,7 +25,9 @@ public class UserManagementAdmin implements UserManagement{
 	 */
 	@Override
 	public void insertUser(User user) {
-	    userList.add(user);	
+	    if(!userList.contains(user)) {
+	      userList.add(user);
+	    }
 	}
 	
 	/**
@@ -33,12 +35,15 @@ public class UserManagementAdmin implements UserManagement{
 	 */
 	@Override
 	public boolean userExist(User user) {  
-		return true;
+	   return userList.contains(user);
 	}
 	
-	
+	/**
+	 * 
+	 * @param user
+	 */
 	public void deleteUser(User user) {
-		
+	    	  userList.remove(user);		
 	}
 
 }
