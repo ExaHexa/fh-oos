@@ -15,28 +15,98 @@ public class TestMain {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
 		UserManagementAdmin adm = new UserManagementAdmin();
 		
-		//test equals method
-		User eUser = new User("karl", "pwd".toCharArray());
-		User e2User = new User("karl", "pwd".toCharArray());
-		User e3User = new User("tim", "pwd".toCharArray());
-		System.out.println("check two equal user");
-		System.out.println(eUser.equals(e2User));
-		System.out.println("check two unequal user");
-		System.out.println(eUser.equals(e3User));
-		//test toString method
-		System.out.println("test toString method");
-		System.out.println(eUser.toString());
-		System.out.println(e3User.toString());
+		//create user objects for testing purposes
+		User tUsr0 = new User("karl", "pwd".toCharArray());
+		User tUsr1 = new User("karl", "pwd".toCharArray());
+		User tUsr2 = new User("tim", "pwd".toCharArray());
+		User tUsr3 = new User("hans", "pwd".toCharArray());
+		User tUsr4 = new User();
+		User tUsr5 = new User(null, null);
 		
+		//test equal method for user elements
+		System.out.println("Test equals method");
+		System.out.println(tUsr0.equals(tUsr1)+ "\n");
+		System.out.println(tUsr0.equals(tUsr2) + "\n");
+		
+		//not working elements
+		try {
+	      System.out.println(tUsr4.equals(tUsr5) + "\n");
+		}catch(NullPointerException e) {
+		    System.err.println("User attributes are null");
+		    e.printStackTrace();
+		}
+		
+		//test toString method
+		System.out.println("\n"+"Test toString method");
+		System.out.println(tUsr0.toString());
+		System.out.println(tUsr2.toString() + "\n");
+		try {
+		    System.out.println(tUsr4.toString());	
+		}catch(NullPointerException e) {
+		    System.err.println("Some references may be null");
+		    e.printStackTrace();
+		}
+		
+		//test insert for fully initialized user objects
+		System.out.println("test insertUser Method");
+		try {			
+			  adm.insertUser(tUsr0);
+		    adm.insertUser(tUsr1);
+		    adm.insertUser(tUsr2);
+		    adm.insertUser(tUsr3);
+		}
+		catch (UserNullReferenceException e) {
+			System.err.println("UserNullReferenceException");
+			e.printStackTrace();
+		}
+		
+		//for not fully initialized user objects
+		try {			
+		    adm.insertUser(tUsr4);    	    	
+	  }
+	  catch (UserNullReferenceException e) {
+		    System.err.println("UserNullReferenceException");
+		    e.printStackTrace();
+	  }
+    
+		//insert with null as parameter 
+		try {			
+	      adm.insertUser(null);    	    	
+    }
+    catch (UserNullReferenceException e) {
+	      System.err.println("UserNullReferenceException");
+	      e.printStackTrace();
+    }
+		
+		//test userExist method
 		//
-		adm.insertUser(eUser);
-		adm.insertUser(e2User);
-		adm.insertUser(e3User);
-		System.out.println(adm.userExist(e3User));
-		adm.deleteUser(e3User);
-		System.out.println(adm.userExist(e3User));
+		System.out.println("test userExist method");
+		System.out.println(tUsr0.toString() + " exist? " + adm.userExist(tUsr0));
+		
+		try{
+		    adm.userExist(tUsr4);
+		}
+		catch (UserNullReferenceException e) {
+		    System.err.println("User 4 still has null references .... ");
+		    e.printStackTrace();
+		}
+	  
+		//test deleteUser method
+		System.out.println("test deleteUser method");
+		adm.deleteUser(tUsr0);
+		try {
+		    adm.deleteUser(null);	
+		}
+		catch(UserNullReferenceException e) {
+		    System.err.println("null");
+		    e.printStackTrace();
+		}
+		
+		System.out.println(tUsr0.toString() + " exist? " + adm.userExist(tUsr0));
+		
 	}
 
 }
