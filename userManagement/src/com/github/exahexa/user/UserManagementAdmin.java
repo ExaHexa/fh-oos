@@ -33,8 +33,9 @@ public class UserManagementAdmin implements UserManagement{
 	 * or the objects attributes
 	 */
 	@Override
-	public void insertUser(User user) throws UserNullReferenceException {
-		if(user == null || user.getPassWD() == null 
+	public void insertUser(User user) {
+		
+		  if(user == null || user.getPassWD() == null 
 		  		            || user.getUserID() == null) {
           throw new UserNullReferenceException("Either user is null or not"
                                   + " all user attributes are initalized");
@@ -52,7 +53,7 @@ public class UserManagementAdmin implements UserManagement{
 	 * @return true if the system contains the specified user
 	 */
 	@Override
-	public boolean userExist(User user) throws UserNullReferenceException {  
+	public boolean userExist(User user) {  
 		  if(user == null || user.getPassWD() == null 
 		  		            || user.getUserID() == null) {
           throw new UserNullReferenceException("Either user is null or not"
@@ -68,13 +69,17 @@ public class UserManagementAdmin implements UserManagement{
 	 * @throws UserNullReferenceException if the specified object is null 
 	 * or the objects attributes
 	 */
-	public void deleteUser(User user) throws UserNullReferenceException {
+	public void deleteUser(User user) throws NoSuchElementException{
 	    if(user == null || user.getPassWD() == null 
                       || user.getUserID() == null) {
           throw new UserNullReferenceException("Either user is null or not"
                                   + " all user attributes are initalized");
       }
+	    if(userList.isEmpty()) {
+	        throw new NoSuchElementException();
+	    }
 	    userList.remove(user);		
+	    
 	}
 
 }

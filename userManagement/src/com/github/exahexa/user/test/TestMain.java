@@ -26,27 +26,37 @@ public class TestMain {
 		User tUsr4 = new User();
 		User tUsr5 = new User(null, null);
 		
-		//test equal method for user elements
-		System.out.println("Test equals method");
-		System.out.println(tUsr0.equals(tUsr1)+ "\n");
-		System.out.println(tUsr0.equals(tUsr2) + "\n");
-		
-		//not working elements
+	  //test equal method for user elements
 		try {
+		    System.out.println("Test equals method");
+		    System.out.println(tUsr0.equals(tUsr1)+ "\n");
+		    System.out.println(tUsr0.equals(tUsr2) + "\n");
+		
+		    //not working elements
 	      System.out.println(tUsr4.equals(tUsr5) + "\n");
 		}catch(NullPointerException e) {
 		    System.err.println("User attributes are null");
 		    e.printStackTrace();
 		}
 		
-		//test toString method
-		System.out.println("\n"+"Test toString method");
-		System.out.println(tUsr0.toString());
-		System.out.println(tUsr2.toString() + "\n");
+	  //test toString method
 		try {
+		    System.out.println("\n"+"Test toString method");
+		    System.out.println(tUsr0.toString());
+		    System.out.println(tUsr2.toString() + "\n");
+		    
 		    System.out.println(tUsr4.toString());	
 		}catch(NullPointerException e) {
 		    System.err.println("Some references may be null");
+		    e.printStackTrace();
+		}
+		
+		//
+		try {
+		     adm.deleteUser(tUsr0);
+		}
+		catch(NoSuchElementException e) {
+		    System.err.println("the list seems to be empty");
 		    e.printStackTrace();
 		}
 		
@@ -82,11 +92,9 @@ public class TestMain {
     }
 		
 		//test userExist method
-		//
-		System.out.println("test userExist method");
-		System.out.println(tUsr0.toString() + " exist? " + adm.userExist(tUsr0));
-		
 		try{
+			  System.out.println("test userExist method");
+			  System.out.println(tUsr0.toString() + " exist? " + adm.userExist(tUsr0));
 		    adm.userExist(tUsr4);
 		}
 		catch (UserNullReferenceException e) {
@@ -95,14 +103,18 @@ public class TestMain {
 		}
 	  
 		//test deleteUser method
-		System.out.println("test deleteUser method");
-		adm.deleteUser(tUsr0);
 		try {
+			  System.out.println("test deleteUser method");
+			  adm.deleteUser(tUsr0);
 		    adm.deleteUser(null);	
 		}
 		catch(UserNullReferenceException e) {
 		    System.err.println("null");
 		    e.printStackTrace();
+		}
+		catch(NoSuchElementException e) {
+			  System.err.println("empty list?");
+			  e.printStackTrace();
 		}
 		
 		System.out.println(tUsr0.toString() + " exist? " + adm.userExist(tUsr0));
