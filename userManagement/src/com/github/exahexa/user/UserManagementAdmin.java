@@ -3,10 +3,19 @@
  */
 package com.github.exahexa.user;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import java.util.LinkedList;
 
+import java.nio.file.FileAlreadyExistsException;
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
 /**
- * 
  * @author exahexa
  * @version 1.0
  */
@@ -19,6 +28,36 @@ public class UserManagementAdmin implements UserManagement{
 	private LinkedList<User> userList; 
 	
 	/**
+	 * 
+	 */
+	private String filePath = "src/com/github/exahexa/user/db/";
+	
+	/**
+	 * 
+	 */
+	private String fileName = "user.db";
+	
+	/**
+	 * output stream for writing data
+	 */
+	private FileOutputStream fos;
+	
+	/**
+	 * obtains input bytes from a file in a file system
+	 */
+	private FileInputStream fis;
+	
+	/**
+	 * writes java objects to an output stream
+	 */
+	private ObjectOutputStream oos;
+	
+	/**
+	 * deserializes objects previously written using an ObjectOutputStream
+	 */
+	private ObjectInputStream ois;
+	
+	/**
 	 * Constructs a new UserManagementAdmin, initializes linked list
 	 * containing the elements of the User collection
 	 */
@@ -29,57 +68,95 @@ public class UserManagementAdmin implements UserManagement{
 	/**
 	 * Inserts a new user specified by the argument of the same name
 	 * @param user a new user to add
-	 * @throws UserNullReferenceException if the specified user is null 
-	 * or the objects attributes
 	 */
 	@Override
 	public void insertUser(User user) {
-		
-		  if(user == null || user.getPassWD() == null 
-		  		            || user.getUserID() == null) {
-          throw new UserNullReferenceException("Either user is null or not"
-                                  + " all user attributes are initalized");
-		  }
+			deserialize();
 	    if(!userList.contains(user)) {
 	        userList.add(user);
+	        serialize();
 	    }
+	    
 	}
 	
 	/**
 	 * Returns true if the list contains the specified element.
 	 * @param user whose presence in the system is to be tested
-	 * @throws UserNullReferenceException if the specified object is null
-	 * or the objects attributes
 	 * @return true if the system contains the specified user
 	 */
 	@Override
 	public boolean userExist(User user) {  
-		  if(user == null || user.getPassWD() == null 
-		  		            || user.getUserID() == null) {
-          throw new UserNullReferenceException("Either user is null or not"
-          		                    + " all user attributes are initalized");
-      }
+			deserialize();
 	    return userList.contains(user);
+	
 	}
 	
 	/**
 	 * Removes the specified element from the user management system, 
 	 * if it is present
-	 * @param user to be removed from the user management sys
-	 * @throws UserNullReferenceException if the specified object is null 
-	 * or the objects attributes
+	 * @param user to be removed from the user management system
 	 */
-	public void deleteUser(User user) throws NoSuchElementException{
-	    if(user == null || user.getPassWD() == null 
-                      || user.getUserID() == null) {
-          throw new UserNullReferenceException("Either user is null or not"
-                                  + " all user attributes are initalized");
-      }
-	    if(userList.isEmpty()) {
-	        throw new NoSuchElementException();
+	public void deleteUser(User user) {
+		  deserialize();
+		  if(!userList.isEmpty()) {
+		      userList.remove(user);	    
+		      serialize();	
+		  }
+		  else {
+		  	throw new NoSuchElementException("UserList is empty");
+		  }
+		  	    
+	}
+	
+	/**
+	 * 	
+	 */
+	public void dbInitialization() throws FileAlreadyExistsException{
+	    File f = new File(filePath + fileName);
+			if(!f.exists()) {
+			    serialize();
+			}
+			else {
+			    throw new FileAlreadyExistsException("File already exists");
+			}
+	}
+	
+	/**
+	 * 
+	 */
+	private void serialize() {
+	    try {
+	        fos = new FileOutputStream(filePath + fileName);
+		      oos = new ObjectOutputStream(fos);
+		      oos.writeObject(userList);
+			    oos.close();
+			    fos.close();
 	    }
-	    userList.remove(user);		
+	    catch(IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	/**
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	private void deserialize() {
+	    try {
+	        fis = new FileInputStream(filePath + fileName);
+		      ois = new ObjectInputStream(fis);
+		      userList = (LinkedList<User>) ois.readObject();
+		      ois.close();
+		      fis.close();	        
+	    }
+	    catch(IOException e) {
+	        e.printStackTrace();	
+	    }
+	    catch(ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
 	    
 	}
+	
 
 }

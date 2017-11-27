@@ -10,6 +10,11 @@ package com.github.exahexa.user;
 public class UserNullReferenceException extends RuntimeException {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4510715743111829923L;
+
+	/**
 	 * Constructs a new exception with null as its message
 	 */
 	public UserNullReferenceException() {

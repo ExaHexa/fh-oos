@@ -3,11 +3,13 @@
  */
 package com.github.exahexa.user.test;
 
+
 import com.github.exahexa.user.*;
 /**
  * @author exahexa
  *
  */
+@SuppressWarnings("unused")
 public class TestMain {
 
 	/**
@@ -16,6 +18,7 @@ public class TestMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		/**
 		UserManagementAdmin adm = new UserManagementAdmin();
 		
 		//create user objects for testing purposes
@@ -23,7 +26,6 @@ public class TestMain {
 		User tUsr1 = new User("karl", "pwd".toCharArray());
 		User tUsr2 = new User("tim", "pwd".toCharArray());
 		User tUsr3 = new User("hans", "pwd".toCharArray());
-		User tUsr4 = new User();
 		User tUsr5 = new User(null, null);
 		
 	  //test equal method for user elements
@@ -119,6 +121,15 @@ public class TestMain {
 		
 		System.out.println(tUsr0.toString() + " exist? " + adm.userExist(tUsr0));
 		
+		try {
+			adm.dbInitialization();
+		}
+		catch(IOException e) {
+			System.err.println("blablablabalbal");
+			e.printStackTrace();
+		}
+		
+		*/
 	}
 
 }

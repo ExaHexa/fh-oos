@@ -11,6 +11,11 @@ package com.github.exahexa.user;
 public class NoSuchElementException extends Exception {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5174415996992944365L;
+
+	/**
 	 * Constructs a new exception with null as its message
 	 */
 	public NoSuchElementException() {
@@ -39,8 +44,8 @@ public class NoSuchElementException extends Exception {
 	 * @param cause the cause
 	 */
 	public NoSuchElementException(String s, Throwable cause) {
-    super(s, cause);		
-}
+      super(s, cause);		
+  }
 	
 
 }
