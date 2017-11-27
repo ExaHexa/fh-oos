@@ -36,12 +36,14 @@ public class User implements Serializable{
    * @throws IllegalArgumentException if either userID or passWD is null or empty
    */
   public User(String userID, char[] passWD) {
-      if(userID != null && passWD != null) {
+      if(userID != null && passWD != null 
+      	 && userID.length() != 0 && passWD.length != 0) {
           this.userID = userID;
           this.passWD = passWD;	
       }
       else {
-      	throw new IllegalArgumentException("User attributes can neither be null nor empty!");
+      	throw new IllegalArgumentException("User attributes can neither "
+      			                                       + "be null nor empty!");
       }
       
   }
@@ -56,7 +58,8 @@ public class User implements Serializable{
       	this.userID = userID;	
       }
       else {
-      	throw new IllegalArgumentException("userID can neither be null nor empty!");
+      	throw new IllegalArgumentException("userID can neither be null "
+      			                                              + "nor empty!");
       }
       
   }
@@ -72,7 +75,8 @@ public class User implements Serializable{
       	this.passWD = passWD;	
       }
       else {
-      	throw new IllegalArgumentException("passWD can neither be null nor empty!");
+      	throw new IllegalArgumentException("passWD can neither be null "
+      			                                             + "nor empty!");
       }
       
   }

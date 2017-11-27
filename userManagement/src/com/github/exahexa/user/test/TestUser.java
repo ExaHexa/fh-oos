@@ -65,11 +65,15 @@ public class TestUser {
 	 * 
 	 */
 	@Test (expected = IllegalArgumentException.class)
-	public void testConstructorUserException() {
+	public void testConstructorNullUser() {
 	    @SuppressWarnings("unused")
 			User tUsr1 = new User(null, null);
-	    @SuppressWarnings("unused")
-			User tUsr2 = new User("", "".toCharArray());
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testConstructorEmptyUser() {
+      @SuppressWarnings("unused")
+		  User tUsr2 = new User("", "".toCharArray());
 	}
 	
 	/**

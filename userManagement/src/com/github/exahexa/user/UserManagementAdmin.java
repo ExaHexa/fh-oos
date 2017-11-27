@@ -70,11 +70,17 @@ public class UserManagementAdmin implements UserManagement{
 	 * @param user a new user to add
 	 */
 	@Override
-	public void insertUser(User user) {
+	public void insertUser(User user) 
+			                   throws IOException, ClassNotFoundException {
 			deserialize();
-	    if(!userList.contains(user)) {
-	        userList.add(user);
-	        serialize();
+	    if(user != null) {
+			    if(!userList.contains(user)) {
+	            userList.add(user);
+	            serialize();
+	        }
+	    }
+	    else {
+	    	throw new IllegalArgumentException("user cannot be null!");
 	    }
 	    
 	}
@@ -85,7 +91,8 @@ public class UserManagementAdmin implements UserManagement{
 	 * @return true if the system contains the specified user
 	 */
 	@Override
-	public boolean userExist(User user) {  
+	public boolean userExist(User user) 
+			                     throws IOException, ClassNotFoundException {  
 			deserialize();
 	    return userList.contains(user);
 	
@@ -96,7 +103,8 @@ public class UserManagementAdmin implements UserManagement{
 	 * if it is present
 	 * @param user to be removed from the user management system
 	 */
-	public void deleteUser(User user) {
+	public void deleteUser(User user) 
+			                   throws IOException, ClassNotFoundException  {
 		  deserialize();
 		  if(!userList.isEmpty()) {
 		      userList.remove(user);	    
@@ -109,12 +117,18 @@ public class UserManagementAdmin implements UserManagement{
 	}
 	
 	/**
-	 * 	
+	 * 
+	 * @throws FileAlreadyExistsException
 	 */
-	public void dbInitialization() throws FileAlreadyExistsException{
+	public void dbInitialization() 
+							throws FileAlreadyExistsException, IOException{
 	    File f = new File(filePath + fileName);
 			if(!f.exists()) {
-			    serialize();
+			    fos = new FileOutputStream(filePath + fileName);
+	        oos = new ObjectOutputStream(fos);
+	        oos.writeObject(new LinkedList<User>());
+		      oos.close();
+		      fos.close();
 			}
 			else {
 			    throw new FileAlreadyExistsException("File already exists");
@@ -123,39 +137,46 @@ public class UserManagementAdmin implements UserManagement{
 	
 	/**
 	 * 
+	 * @throws FileAlreadyExistsException
 	 */
-	private void serialize() {
-	    try {
+	public void dbInitialization(String fileName) 
+			        throws FileAlreadyExistsException, IOException{
+			this.fileName = fileName;
+      File f = new File(filePath + fileName);
+		  if(!f.exists()) {
+	        fos = new FileOutputStream(filePath + fileName);
+		      oos = new ObjectOutputStream(fos);
+		      oos.writeObject(new LinkedList<User>());
+			    oos.close();
+			    fos.close();
+	    }
+		  else {
+		      throw new FileAlreadyExistsException("File already exists");
+		  }
+  }
+	
+	/**
+	 * @throws IOException
+	 */
+	private void serialize() throws IOException{
 	        fos = new FileOutputStream(filePath + fileName);
 		      oos = new ObjectOutputStream(fos);
 		      oos.writeObject(userList);
 			    oos.close();
 			    fos.close();
-	    }
-	    catch(IOException e) {
-	        e.printStackTrace();
-	    }
 	}
 	
 	/**
-	 * 
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	private void deserialize() {
-	    try {
+	private void deserialize() throws IOException, ClassNotFoundException{
 	        fis = new FileInputStream(filePath + fileName);
 		      ois = new ObjectInputStream(fis);
 		      userList = (LinkedList<User>) ois.readObject();
 		      ois.close();
-		      fis.close();	        
-	    }
-	    catch(IOException e) {
-	        e.printStackTrace();	
-	    }
-	    catch(ClassNotFoundException e) {
-	        e.printStackTrace();
-	    }
-	    
+		      fis.close();	        	    
 	}
 	
 

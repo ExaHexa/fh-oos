@@ -9,6 +9,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.nio.file.FileAlreadyExistsException;
+import java.io.IOException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -67,27 +68,63 @@ public class TestUserManagementAdmin {
 
 	@Test
 	public void testBasicUserAdmOperations() {
-	    adm.insertUser(u);
-	    Assert.assertTrue(adm.userExist(u));
-	    Assert.assertFalse(adm.userExist(u2));
-	    adm.deleteUser(u);
-	    Assert.assertFalse(adm.userExist(u));
+			try {
+	        adm.insertUser(u);
+	        Assert.assertTrue(adm.userExist(u));
+	        Assert.assertFalse(adm.userExist(u2));
+	        adm.deleteUser(u);
+	        Assert.assertFalse(adm.userExist(u));
+			}
+			catch(ClassNotFoundException e) {
+			    e.printStackTrace();
+			    fail();
+			}
+			catch(IOException e) {
+					e.printStackTrace();
+					fail();
+			}
 	}
 	
 	@Test (expected = NoSuchElementException.class)
 	public void testDeleteUserException() {
-	    adm.deleteUser(u);
+	    try {
+	        adm.deleteUser(u);
+	    }
+	    catch(ClassNotFoundException e) {
+		      e.printStackTrace();
+		  }
+		  catch(IOException e) {
+				  e.printStackTrace();
+		  }
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testInsertUserException() {
+	    try {
+		      adm.insertUser(null);
+	    }
+	    catch(ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+	    catch(IOException e) {
+			    e.printStackTrace();
+	    }
 	}
 	
 	@Test
 	public void testdbInitialization() {
 	    try {
 	        adm.dbInitialization();
-	        fail("blabla");
+	        fail();
 	    }
 	    catch(FileAlreadyExistsException e) {
-	        e.printStackTrace();
-	    }		
+        e.printStackTrace();
+	    }	
+	    catch(IOException e) {
+	    	e.printStackTrace();
+	    	fail();
+	    }
+	    	
 	}
 	
 
