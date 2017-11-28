@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"com.github.exahexa.geom","l":"KreisAgg"},{"p":"com.github.exahexa.geom","l":"KreisVererb"},{"p":"com.github.exahexa.geom","l":"Point"},{"p":"com.github.exahexa.geom","l":"Rechteck"},{"p":"com.github.exahexa.geom","l":"SimpleGeomFigure"}]
