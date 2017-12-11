@@ -163,7 +163,6 @@ public class UserManagementAdmin implements UserManagement{
 		      oos = new ObjectOutputStream(fos);
 		      oos.writeObject(userList);
 			    oos.close();
-			    fos.close();
 	}
 	
 	/**
@@ -175,8 +174,7 @@ public class UserManagementAdmin implements UserManagement{
 	        fis = new FileInputStream(filePath + fileName);
 		      ois = new ObjectInputStream(fis);
 		      userList = (LinkedList<User>) ois.readObject();
-		      ois.close();
-		      fis.close();	        	    
+		      ois.close();	        	    
 	}
 	
 
