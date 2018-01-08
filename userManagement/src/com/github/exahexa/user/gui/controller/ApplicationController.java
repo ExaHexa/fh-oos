@@ -6,6 +6,7 @@ package com.github.exahexa.user.gui.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
@@ -19,8 +20,13 @@ import javafx.scene.control.Label;
  */
 public class ApplicationController {
 		
+		MainApp mainCtrl;
 	  
 	  public ApplicationController() {
+	  }
+	  
+	  public ApplicationController(MainApp mainCtrl) {
+	      this.mainCtrl = mainCtrl;
 	  }
 		
 		
@@ -44,8 +50,7 @@ public class ApplicationController {
     @FXML
     void buttonAction(ActionEvent event) throws Exception { 	
     		System.out.println("Eine Meldung");
-    	  SceneManager.getInstance().swToLoginScene(
-    	  		((Stage)((Node)event.getSource()).getScene().getWindow()));
+    	  Platform.exit();
     }
 		
     @FXML

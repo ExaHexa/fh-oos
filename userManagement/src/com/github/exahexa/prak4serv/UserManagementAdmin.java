@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.github.exahexa.user;
+package com.github.exahexa.prak4serv;
+
+import com.github.exahexa.prak4gemklassen.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +32,7 @@ public class UserManagementAdmin implements UserManagement{
 	/**
 	 * 
 	 */
-	private String filePath = "src/com/github/exahexa/user/db/";
+	private String filePath = "src/com/github/exahexa/prak4serv/";
 	
 	/**
 	 * 
@@ -63,6 +65,14 @@ public class UserManagementAdmin implements UserManagement{
 	 */
 	public UserManagementAdmin() {
 	    userList = new LinkedList<User>();
+	    try {
+				dbInitialization();
+			} catch (FileAlreadyExistsException e) {
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	/**

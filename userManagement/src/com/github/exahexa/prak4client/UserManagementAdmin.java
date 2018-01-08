@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.github.exahexa.user;
+package com.github.exahexa.prak4client;
+
+import com.github.exahexa.prak4gemklassen.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +32,7 @@ public class UserManagementAdmin implements UserManagement{
 	/**
 	 * 
 	 */
-	private String filePath = "src/com/github/exahexa/user/db/";
+	private String filePath = "src/com/github/exahexa/prak4client/";
 	
 	/**
 	 * 

@@ -3,12 +3,12 @@
  */
 package com.github.exahexa.user.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.github.exahexa.user.User;
+import com.github.exahexa.prak4gemklassen.*;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,8 +24,14 @@ import javafx.scene.input.KeyEvent;
  */
 public class RegistrationSceneController {
 	
+	private MainApp mainCtrl;
+	
 	public RegistrationSceneController() {
 		
+	}
+	
+	public RegistrationSceneController(MainApp mainCtrl) {
+	    this.mainCtrl = mainCtrl;
 	}
 	
 	@FXML
@@ -60,9 +66,14 @@ public class RegistrationSceneController {
   		 && password_c.getText() != null && !password_c.getText().isEmpty()) {
   			
   	    if(password.getText().equals(password_c.getText())) {
-  				  System.out.println(new User(userID.getText(), 
-							                 password.getText().toCharArray()).toString());
-  				  Platform.exit();
+  	    	try {
+  				  mainCtrl.newUser(new User(userID.getText(), 
+							                 password.getText().toCharArray()));
+  	    	}catch(IOException e) {
+    				
+    			}catch(ClassNotFoundException e) {
+    				
+    			}
   			}
   	    else {
   	    	System.out.println("nicht gleich!");
@@ -117,5 +128,11 @@ public class RegistrationSceneController {
   void initialize() {
 
   }
-
+  
+  
+  void setMainCtrl(MainApp mainCtrl) {
+      this.mainCtrl = mainCtrl;
+  }
+  
+  
 }
